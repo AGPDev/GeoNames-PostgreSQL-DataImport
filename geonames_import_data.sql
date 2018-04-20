@@ -33,11 +33,16 @@ ALTER TABLE ONLY countryinfo
 ADD CONSTRAINT fk_geonameid FOREIGN KEY (geonameid) REFERENCES geoname(geonameid);
 vacuum analyze verbose countryinfo;
 
-\COPY continentCodes (code, name, geonameId) from 'continentCodes.txt' null as '' delimiter ',';
-vacuum analyze verbose continentCodes;
+\COPY continentcodes (code, name, geonameId) from 'continentCodes.txt' null as '' delimiter ',';
+vacuum analyze verbose continentcodes;
 
 \COPY postalcodes (country, postal_code, name, admin1_name, admin1_code, admin2_name, admin2_code, admin3_name, admin3_code, latitude, longitude, accuracy) from 'data/zip_codes/allCountries.txt' null as '';
 vacuum analyze verbose postalcodes;
 
-CREATE INDEX index_countryinfo_geonameid ON countryinfo USING hash (geonameid);
-CREATE INDEX index_alternatename_geonameid ON alternatename USING hash (geonameid);
+CREATE INDEX index_timezones_all ON timezones (timezoneid, dst_offset, gmt_offset, raw_offset);
+CREATE INDEX index_continents_all ON continentcodes (geonameid, name, code);
+CREATE INDEX index_geoname_geonameid ON geoname (geonameid);
+CREATE INDEX index_geoname_paises ON geoname (fclass, fcode);
+CREATE INDEX index_countryinfo_all ON countryinfo (geonameid, capital, continent, areainsqkm, population, currency, currencyname, phone, postalcodeformat, postalcoderegex, languages);
+CREATE INDEX index_geoname_cidades ON geoname (fclass, fcode, admin1, country);
+CREATE INDEX index_alternatename_all ON alternatename (geonameid, isolanguage);
