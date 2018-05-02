@@ -45,4 +45,4 @@ CREATE INDEX index_geoname_geonameid ON geoname (geonameid);
 CREATE INDEX index_geoname_paises ON geoname (fclass, fcode);
 CREATE INDEX index_countryinfo_all ON countryinfo (geonameid, capital, continent, areainsqkm, population, currency, currencyname, phone, postalcodeformat, postalcoderegex, languages);
 CREATE INDEX index_geoname_cidades ON geoname (fclass, fcode, admin1, country);
-CREATE INDEX index_alternatename_all ON alternatename (geonameid, isolanguage);
+CREATE INDEX index_alternatename_all ON alternatename (geonameid, isolanguage, ispreferredname);
